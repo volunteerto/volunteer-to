@@ -27,9 +27,6 @@ spec:
       - name: {{ template "volunteer-to.fullname" . }}
         image: {{ include "volunteer-to.api.image" . }}
         imagePullPolicy: {{ .Values.api.image.pullPolicy }}
-        envFrom:
-          - secretRef:
-              name: {{ .Values.api.secretName }}
         env:
         {{- range $name, $value := .Values.devEnv }}
         - name: {{ $name }}

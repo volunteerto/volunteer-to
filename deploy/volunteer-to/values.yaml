@@ -15,8 +15,6 @@ api:
       cpu: 1
       memory: 1Gi
 
-  secretName: "volunteer-to"
-
   nodePort: 31901
   containerPort: 80
   servicePort: 80
