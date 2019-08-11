@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "volunteer-to.fullname" . }}-api
+  labels:
+    {{ include "volunteer-to.metadataLabels" . | nindent 2 | trim}}
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.api.servicePort }}
+      nodePort: {{ .Values.api.nodePort }}
+      targetPort: http
+      protocol: TCP
+  selector:
+    app: {{ template "volunteer-to.name" . }}
+    instance: {{ .Release.Name }}
+    role: api

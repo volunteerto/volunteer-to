@@ -1,0 +1,26 @@
+apiVersion: skaffold/v1beta12
+kind: Config
+build:
+  artifacts:
+  - image: volunteer-to-api
+    docker:
+      dockerfile: cmd/volunteer-to-api/Dockerfile
+  - image: volunteer-to-db
+    docker:
+      dockerfile: cmd/volunteer-to-db/Dockerfile
+deploy:
+  helm:
+    releases:
+    - name: volunteer-to
+      chartPath: deploy/volunteer-to
+      values:
+        api.image.repository: volunteer-to-api
+        db.image.repository: volunteer-to-db
+      setValues:
+        api.image.tag: "" # allow skaffold to inject the tag
+        api.image.pullPolicy: Never # use minikube's local docker
+        db.image.tag: ""
+        db.image.pullPolicy: Never
+        devEnv.NAMESPACE: default
+        devEnv.RELEASE_NAME: volunteer-to
+        devEnv.HELM_TIMEOUT_SECONDS: 30

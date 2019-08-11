@@ -1,0 +1,39 @@
+nameOverride: ""
+fullnameOverride: ""
+
+api:
+  image:
+    repository: 723255503624.dkr.ecr.us-east-1.amazonaws.com/volunteer-to-api
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
+  nodePort: 31901
+  containerPort: 80
+  servicePort: 80
+
+db:
+  image:
+    repository: 723255503624.dkr.ecr.us-east-1.amazonaws.com/volunteer-to-db
+    tag: latest
+    pullPolicy: IfNotPresent
+
+
+  namespace: default
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+      limits:
+        cpu: 1
+        memory: 1Gi
+
+sslCertPath: "/etc/ssl/certs/ca-certificates.crt"
