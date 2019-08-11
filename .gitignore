@@ -1,2 +1,3 @@
 # ignore file types and directories here
 .vscode
+.DS_Store
