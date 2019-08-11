@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 	"volunteerto/internal/api"
+	"volunteerto/internal/api/config"
 
 	"github.com/go-kit/kit/log"
 )
@@ -28,8 +29,14 @@ func main() {
 		cancel()
 	}()
 
+	cfg, err := config.FromEnv()
+	if err != nil {
+		logger.Log("error", err)
+		os.Exit(1)
+	}
+
 	srv := http.Server{
-		Addr:    ":8080",
+		Addr:    ":" + cfg.ServicePort,
 		Handler: api.New(),
 	}
 
