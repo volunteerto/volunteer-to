@@ -1,0 +1,50 @@
+language: go
+
+go:
+  - 1.12.1
+
+env:
+  - GO111MODULE=on
+
+services:
+  - docker
+
+stages:
+  - name: Test and Lint
+    if: type = pull_request
+  - name: Build
+    if: type = pull_request
+  - name: Push
+    if: type = push AND branch = master
+
+jobs:
+  include:
+    - stage: Build
+      name: Docker
+      script:
+        - TARGET=volunteer-to-api make build
+        - TARGET=volunteer-to-db make build
+    
+    - stage: Test and Lint
+      name: Go
+      install: go get "github.com/golangci/golangci-lint/cmd/golangci-lint"
+      script:
+        - golangci-lint run -D errcheck -E goimports -E interfacer ./...
+        - go test ./...
+
+    - stage: Test and Lint
+      name: JavaScript
+      script: cd web && npm install -D && npm run lint && npm run test
+
+    - stage: Test and Lint
+      name: Helm Lint
+      script:
+        - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+        - chmod 700 get_helm.sh && sudo ./get_helm.sh
+        - helm init --client-only
+        - helm lint deploy/ship-it
+        - helm lint deploy/localstack
+
+branches:
+  only:
+    - master
