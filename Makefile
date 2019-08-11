@@ -12,4 +12,4 @@ ifndef TARGET
 endif
 
 build: env-target
-	docker build -t $(TARGET_IMAGE) -f cmd/$(TARGET)/Dockerfile .
+	docker build -t $(TARGET) -f cmd/$(TARGET)/Dockerfile .
