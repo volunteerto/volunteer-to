@@ -17,7 +17,7 @@ api:
 
   secretName: "volunteer-to"
 
-  nodePort: 42069
+  nodePort: 31901
   containerPort: 80
   servicePort: 80
 

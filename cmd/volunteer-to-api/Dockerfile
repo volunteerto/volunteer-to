@@ -7,4 +7,6 @@ FROM alpine:3.8
 RUN apk add --no-cache ca-certificates
 COPY --from=golang-build /build/volunteer-to-api /
 
+EXPOSE 80
+
 CMD ["/volunteer-to-api"]

@@ -29,14 +29,14 @@ func main() {
 		cancel()
 	}()
 
-	cfg, err := config.FromEnv()
+	_, err := config.FromEnv()
 	if err != nil {
 		logger.Log("error", err)
 		os.Exit(1)
 	}
 
 	srv := http.Server{
-		Addr:    ":" + cfg.ServicePort,
+		Addr:    ":80",
 		Handler: api.New(),
 	}
 
