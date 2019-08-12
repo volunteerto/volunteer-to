@@ -8,5 +8,5 @@ RUN apk add --no-cache ca-certificates
 COPY --from=golang-build /build/volunteer-to-db /
 
 EXPOSE 8000
-
+EXPOSE 3306
 CMD ["/volunteer-to-db"]
